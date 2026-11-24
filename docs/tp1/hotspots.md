@@ -6,13 +6,12 @@
 
 **Question :** Un billet a été revendu, puis le concert de la tête d'affiche est annulé. Qui est remboursé à 50 % : le vendeur ou le racheteur ?? La commission pour la revente..?
 
-1) : le racheteur 
-
-2) : Fix et si amélioration on peut voir...
 
 **Réponse de l'expert :**
 
+1) : le racheteur 
 
+2) : Fix et si amélioration on peut voir...
 
 ---
 
@@ -22,7 +21,7 @@
 
 **Réponse de l'expert :**
 
-une fois dans le paiement, stopper le parametre de résa...
+Une fois dans le paiement, stopper le paramètre de résa...
 
 ---
 
