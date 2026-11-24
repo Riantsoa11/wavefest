@@ -2,15 +2,11 @@
 
 > TP1 · Event Storming Big Picture · WaveFest
 
-
 ### Q1. Revente puis annulation
 
 **Question :** Un billet a été revendu, puis le concert de la tête d'affiche est annulé. Qui est remboursé à 50 % : le vendeur ou le racheteur ?? La commission pour la revente..?
 
-
 **Réponse de l'expert :**
-
-
 
 ---
 
@@ -18,10 +14,7 @@
 
 **Question :** Le PSP confirme un paiement alors que la réservation de 15 minutes a expiré et que les places ont été libérées. Que fait-on de la commande ?
 
-
 **Réponse de l'expert :**
-
-
 
 ---
 
@@ -31,38 +24,7 @@
 
 Sinon, dans quelle vague, et à quel prix, reviennent ces places ??
 
-
 **Réponse de l'expert :**
-
-
-
----
-
-### Q4. Décision d'annulation et périmètre du remboursement
-
-**Question :** Qui décide officiellement qu'un concert est « annulé » ? 
-
-Les pass 3 jours et les pass VIP sont-ils remboursés, et si oui, comment ??
-
-
-
-**Réponse de l'expert :**
-
-
-
-
----
-
-### Q5. Bracelet perdu
-
-**Question :** Si un festivalier perd son bracelet, son porte-monnaie cashless est-il récupéré sur un nouveau bracelet ? 
-
-
-
-
-**Réponse de l'expert :**
-
-
 
 ---
 
