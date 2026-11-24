@@ -9,7 +9,7 @@
 
 **Réponse de l'expert :**
 
-1) : le racheteur 
+1) : le racheteur  
 
 2) : Fix et si amélioration on peut voir...
 
