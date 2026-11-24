@@ -1,4 +1,4 @@
-Glossaire
+# Glossaire
 
 Une phrase métier par terme, sans mot technique.
 
@@ -23,7 +23,7 @@ Une phrase métier par terme, sans mot technique.
 | Prix plafond | Prix maximal de revente, égal au prix d'achat du billet. |
 | Commission de revente | Part de 5 % prélevée par WaveFest sur chaque revente. |
 | Portique | Point d'entrée où le billet est échangé contre un bracelet. |
-| Bracelet | Bracelet RFID remis à l'entrée, propre à un seul festivalier. |
+| Bracelet | Bracelet remis à l'entrée, propre à un seul festivalier, qui sert d'accès et de porte-monnaie. |
 | Solde cashless | Argent disponible sur le bracelet pour payer sur le site. |
 | Recharge | Ajout d'argent au solde cashless, en ligne ou sur place. |
 | Consommation | Achat sur le site payé avec le solde cashless. |
@@ -32,3 +32,32 @@ Une phrase métier par terme, sans mot technique.
 | Tête d'affiche | Artiste principal d'une journée ; son annulation ouvre droit à un remboursement partiel. |
 | Annulation | Décision officielle qu'un concert prévu n'aura pas lieu. |
 | PSP | Prestataire externe qui encaisse et rembourse les paiements. |
+
+## Synonymes tranchés
+
+On choisit un seul mot et on écarte les autres. Ces mots ne doivent plus apparaître dans le code ni dans les échanges.
+
+| On dit | On ne dit pas |
+|---|---|
+| Pass | Formule, offre |
+| Billet | Ticket, place, e-ticket |
+| Vague | Phase, palier |
+| Quota | Stock, contingent |
+| Commande | Panier |
+| Réservation | Hold |
+| Acheteur | Client |
+| Titulaire | Porteur, bénéficiaire |
+| Festivalier | Visiteur, participant, utilisateur |
+| Changement de nom | Transfert |
+| Revente | Bourse |
+| Commission de revente | Frais de revente |
+| Portique | Entrée, contrôle |
+| Bracelet | Puce, badge, RFID, wristband |
+| Solde cashless | Crédit, porte-monnaie, cagnotte |
+| Recharge | Top-up |
+| Consommation | Transaction |
+| Remboursement du solde | Rétrocession |
+| Tête d'affiche | Headliner |
+| Annulation | Déprogrammation |
+| Organisateur | Admin, back-office |
+| PSP | Banque, plateforme de paiement |
