@@ -6,7 +6,13 @@
 
 **Question :** Un billet a été revendu, puis le concert de la tête d'affiche est annulé. Qui est remboursé à 50 % : le vendeur ou le racheteur ?? La commission pour la revente..?
 
+1) : le racheteur 
+
+2) : Fix et si amélioration on peut voir...
+
 **Réponse de l'expert :**
+
+
 
 ---
 
@@ -15,6 +21,8 @@
 **Question :** Le PSP confirme un paiement alors que la réservation de 15 minutes a expiré et que les places ont été libérées. Que fait-on de la commande ?
 
 **Réponse de l'expert :**
+
+une fois dans le paiement, stopper le parametre de résa...
 
 ---
 
@@ -25,6 +33,9 @@
 Sinon, dans quelle vague, et à quel prix, reviennent ces places ??
 
 **Réponse de l'expert :**
+
+
+oui, (prix augmente : trouver un paramètre)
 
 ---
 
