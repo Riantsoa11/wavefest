@@ -32,6 +32,22 @@ Une phrase métier par terme, sans mot technique.
 | Tête d'affiche | Artiste principal d'une journée ; son annulation ouvre droit à un remboursement partiel. |
 | Annulation | Décision officielle qu'un concert prévu n'aura pas lieu. |
 | PSP | Prestataire externe qui encaisse et rembourse les paiements. |
+| Concert | Passage d'un artiste sur une scène, à une date et un horaire donnés. |
+| Line-up | Liste des artistes programmés pour une édition. |
+| Vendeur | Titulaire qui met son billet en revente. |
+| Racheteur | Festivalier qui achète un billet en revente et en devient le titulaire. |
+| Réouverture de vague | Remise en vente de places libérées dans une vague close, à un prix plus élevé. |
+| Remboursement partiel | Restitution de 50 % du prix payé d'un pass 1 jour quand la tête d'affiche de la journée est annulée. |
+| Bénévole au portique | Personne qui vérifie les billets et remet les bracelets à l'entrée. |
+| Barman | Personne qui encaisse les consommations sur le site. |
+
+## Un même mot, un sens par contexte (TP2)
+
+| Mot | Billetterie | Contrôle d'accès | Cashless | Remboursements d'annulation |
+|---|---|---|---|---|
+| Billet | Exemplaire d'un pass, au nom d'un titulaire, avec un prix payé. | Preuve à présenter une fois au portique : valide, déjà utilisée ou refusée. | N'existe pas : on parle de bracelet. | Ligne à rembourser : un titulaire et un montant. |
+| Bracelet | N'existe pas. | Remis contre un billet vérifié, associé au titulaire. | Porte le solde cashless. | N'existe pas. |
+| Remboursement | Non utilisé. | Non utilisé. | Remboursement du solde (J+15, 1,50 € de frais). | Remboursement partiel d'un pass (50 %). |
 
 ## Synonymes tranchés
 
