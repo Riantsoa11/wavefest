@@ -1,35 +1,35 @@
 # Processus · Event Storming niveau process
 
-Grammaire : **Acteur** → **Commande** → **Agrégat** → **Événement** → **Politique** → Commande… ; un **Read model** informe l'acteur ; les **Systèmes externes** passent par une ACL ou en Conformist.
+> Recopiés du Miro, cadres **04** et **05**. Grammaire : Acteur → Commande → Agrégat → Événement → Politique → Commande… ; un read model informe l'acteur ; les systèmes externes passent par une ACL ou en Conformist.
 
-## Process 1 · Achat d'un pass avec vagues
+## Process 1 · Achat d'un pass avec vagues (cadre 04)
 
 ![Process achat](process-achat.jpg)
 
-**Cas nominal :** l'acheteur consulte la grille des prix, passe une commande (1 à 6 billets) → *Places réservées* → il paie → *Paiement demandé* (le délai de 15 min est suspendu, réponse Q2) → *Paiement confirmé* → *Billets émis* → *Confirmation d'achat envoyée*.
+| Ligne | Résumé |
+|---|---|
+| Chemin nominal | Grille des prix → Acheteur *Acheter un pass (1 à 6 billets)* → **Places réservées** → *Initier le paiement* → **Paiement initié (minuteur suspendu)** → PSP (ACL) → **Paiement confirmé** → *Valider la commande* → **Commande payée** → *Émettre les billets* → **Billets émis** → *Envoyer la confirmation* → Prestataire e-mail → **Confirmation d'achat envoyée** |
+| Clôture de vague | **Commande refusée : quota épuisé** ou **Date de fin de vague atteinte** → *Clore la vague* → **Vague close** → *Ouvrir la vague suivante* → **Vague suivante ouverte (prix supérieur)** → Grille des prix mise à jour |
+| Paiement refusé | **Paiement refusé** → *Annuler la commande* → **Commande annulée** → *Libérer les places* → **Places libérées (quota recrédité)** |
+| Expiration (15 min) | Non payée sous 15 min ou PSP muet → *Expirer la commande* → **Commande expirée** → *Libérer les places* → **Places libérées** (au prix de la vague ouverte) |
+| Paiement tardif | **Paiement confirmé sur commande expirée** → *Rembourser le paiement* → PSP (ACL) → **Paiement tardif remboursé** · hotspot Q2 |
 
-**Cas d'échec :**
-- **Quota épuisé** → *Commande refusée*, puis la vague est close et la suivante s'ouvre.
-- **Plus de 6 billets** → *Commande refusée*.
-- **Paiement refusé** → les places sont libérées.
-- **Expiration** : sans paiement sous 15 min → *Réservation expirée* → *Places libérées* → si la vague était close, elle rouvre à prix majoré (réponse Q3).
-
-**Agrégats :** Vague (protège le quota), Commande (protège le délai et le paiement), Billet (protège le titulaire).
-
-## Process 2 · Annulation d'un concert
+## Process 2 · Annulation d'un concert (cadre 05)
 
 ![Process annulation](process-annulation.jpg)
 
-**Cas nominal :** l'organisateur annule un concert → *Annulation annoncée* (e-mail à tous). Si c'est une tête d'affiche → *Tête d'affiche annulée* → identification des pass 1 jour concernés (read model fourni par la Billetterie) → remboursement de 50 % au titulaire actuel → *Pass remboursé à 50 %* → avis de remboursement envoyé.
+| Ligne | Résumé |
+|---|---|
+| Chemin nominal | Organisateur *Annuler le concert* → **Concert annulé** → si tête d'affiche, *Ouvrir la campagne de remboursement* → **Campagne ouverte** → pour chaque billet valide, *Demander le remboursement* (50 %) → PSP (ACL) → **Remboursement effectué** → e-mail → … → *Clore la campagne* → **Campagne close** |
+| Pas une tête d'affiche | Informer les titulaires, sans remboursement → **Titulaires informés** |
+| Billet déjà revendu | Rembourser le racheteur, 50 % de son prix de rachat · hotspot Q1 (commission rendue ?) |
+| Revente en cours | *Retirer l'annonce* → **Annonce retirée** (contexte Revente) |
+| PSP en échec | Relancer 3 fois max, toutes les heures → puis **Remboursement à traiter** → Organisateur *Traiter le remboursement* |
+| E-mail en échec | Renvoyer une fois → si échec, **Avis affiché dans l'espace festivalier** |
+| Marquage du billet | *Marquer le billet remboursé* (Billetterie, via son API publiée) → **Billet remboursé (reste valable)** |
 
-**Cas d'échec :**
-- **PSP en échec** → *Remboursement échoué* → relance ; après 3 échecs → *Remboursement en anomalie*, signalé à l'organisateur.
-- **Billet déjà revendu** → on rembourse le racheteur, titulaire actuel ; la commission de revente n'est pas rendue (réponse Q1).
-- **E-mail non délivré** → le remboursement reste valable, seul l'e-mail est relancé (à confirmer).
+## Questions ouvertes pour l'expert
 
-## Questions pour l'expert métier
-
-1. Les pass 3 jours et VIP sont-ils remboursés en cas d'annulation d'une tête d'affiche ?
-2. Combien de relances au PSP avant de signaler une anomalie ?
-3. Après un paiement refusé, l'acheteur peut-il réessayer dans le délai de réservation ?
-4. Quelle règle fixe le prix d'une vague rouverte ?
+1. Combien de temps attendre le PSP une fois le paiement initié ? (Q2)
+2. La commission de 5 % est-elle rendue au racheteur en cas d'annulation ? (Q1)
+3. Les pass 3 jours et VIP sont-ils remboursés si une tête d'affiche est annulée ?

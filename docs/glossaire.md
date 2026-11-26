@@ -36,18 +36,21 @@ Une phrase métier par terme, sans mot technique.
 | Line-up | Liste des artistes programmés pour une édition. |
 | Vendeur | Titulaire qui met son billet en revente. |
 | Racheteur | Festivalier qui achète un billet en revente et en devient le titulaire. |
-| Réouverture de vague | Remise en vente de places libérées dans une vague close, à un prix plus élevé. |
+| Annonce de revente | Mise en vente d'un billet par son titulaire, au prix plafond au plus. |
+| Campagne de remboursement | Ensemble des remboursements ouverts pour une journée dont la tête d'affiche est annulée. |
 | Remboursement partiel | Restitution de 50 % du prix payé d'un pass 1 jour quand la tête d'affiche de la journée est annulée. |
+| Grille des prix | Prix et places disponibles de la vague ouverte, consultés par l'acheteur. |
+| Prestataire e-mail | Prestataire externe qui envoie les e-mails aux acheteurs et titulaires. |
 | Bénévole au portique | Personne qui vérifie les billets et remet les bracelets à l'entrée. |
 | Barman | Personne qui encaisse les consommations sur le site. |
 
 ## Un même mot, un sens par contexte (TP2)
 
-| Mot | Billetterie | Contrôle d'accès | Cashless | Remboursements d'annulation |
-|---|---|---|---|---|
-| Billet | Exemplaire d'un pass, au nom d'un titulaire, avec un prix payé. | Preuve à présenter une fois au portique : valide, déjà utilisée ou refusée. | N'existe pas : on parle de bracelet. | Ligne à rembourser : un titulaire et un montant. |
-| Bracelet | N'existe pas. | Remis contre un billet vérifié, associé au titulaire. | Porte le solde cashless. | N'existe pas. |
-| Remboursement | Non utilisé. | Non utilisé. | Remboursement du solde (J+15, 1,50 € de frais). | Remboursement partiel d'un pass (50 %). |
+| Mot | Billetterie | Revente officielle | Contrôle d'accès | Cashless | Remboursements |
+|---|---|---|---|---|---|
+| Billet | Exemplaire d'un pass, au nom d'un titulaire, avec un prix payé. | Objet d'une annonce, vendu au prix plafond. | QR à scanner, valide ou non. | N'existe pas : on parle de bracelet. | Ligne à rembourser : un titulaire et un montant. |
+| Prix | Prix de la vague. | Prix plafond = prix d'achat. | Non utilisé. | Non utilisé. | Prix payé par le titulaire actuel. |
+| Remboursement | Paiement tardif remboursé. | Non utilisé. | Non utilisé. | Remboursement du solde (J+15, 1,50 € de frais). | Remboursement partiel d'un pass (50 %). |
 
 ## Synonymes tranchés
 
@@ -77,3 +80,5 @@ On choisit un seul mot et on écarte les autres. Ces mots ne doivent plus appara
 | Annulation | Déprogrammation |
 | Organisateur | Admin, back-office |
 | PSP | Banque, plateforme de paiement |
+| Prestataire e-mail | SaaS e-mailing |
+| Organisateur (pour annuler un concert) | Programmateur |
