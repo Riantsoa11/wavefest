@@ -107,3 +107,16 @@ Chaque terme métier a sa classe ou sa méthode dans `src/fr/wavefest/billetteri
 | Commission de revente | `OffreDeRevente.commission`, `netVendeur` | domaine/billet |
 | Montant (prix) | `Montant` (Value Object, en centimes) | domaine/commun |
 | PSP | `PortPaiement` (port), `PspPaiementAdapter` (ACL) | application, infrastructure |
+
+## Les autres contextes dans le code
+
+| Terme du glossaire | Code TypeScript | Contexte |
+|---|---|---|
+| Annonce de revente, Racheteur, Vendeur | `AnnonceDeRevente` (`racheter`, `retirer`) | revente |
+| Billet (au portique) | `BilletDAcces` | controle-acces |
+| Bracelet, Portique | `Bracelet` (`passerLePortique`), `echangerContreBracelet` | controle-acces |
+| Solde cashless, Recharge, Consommation | `SoldeCashless` (`recharger`, `payerUneConsommation`) | cashless |
+| Remboursement du solde | `SoldeCashless.montantARembourser`, `confirmerLeRemboursement` | cashless |
+| Line-up, Concert, Tête d'affiche | `Programme`, `Concert` (`teteDAffiche`) | programmation |
+| Campagne de remboursement, Remboursement partiel | `CampagneDeRemboursement`, `Remboursement`, `montantARembourser` | remboursements |
+| Billet émis, Titulaire changé, Billet revendu, Concert annulé | `BilletEmis`, `TitulaireChange`, `BilletRevendu`, `ConcertAnnule` (langage publié) | integration |

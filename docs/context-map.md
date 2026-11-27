@@ -50,3 +50,7 @@ Découpés à partir des sous-domaines (cadre 03). Chaque frontière suit un cha
 ## Écart avec le TP1, à justifier en restitution
 
 Au TP1 (cadre 03), le **Cashless** était classé Core et la **Revente** Supporting (« à débattre »). Au TP2, la Revente devient un contexte **Core** séparé (voir [ADR 0001](adr/0001-revente-separee-billetterie.md)) et le Cashless passe en **Supporting**. Justification proposée (à valider en groupe) : le principe existe chez tous les festivals, alors que la revente plafonnée est une règle propre à WaveFest.
+
+## Dans le code
+
+Chaque relation de ce tableau est implémentée dans `src/fr/wavefest/Festival.ts` (abonnements du bus) et vérifiée par `tests/integration/ScenarioFestival.test.ts`. Détails dans l'[ADR 003](adr/0003-integration-des-contextes.md).
