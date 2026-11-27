@@ -82,3 +82,28 @@ On choisit un seul mot et on écarte les autres. Ces mots ne doivent plus appara
 | PSP | Banque, plateforme de paiement |
 | Prestataire e-mail | SaaS e-mailing |
 | Organisateur (pour annuler un concert) | Programmateur |
+
+## Du glossaire au code (TP3)
+
+Chaque terme métier a sa classe ou sa méthode dans `src/fr/wavefest/billetterie/`. Aucun mot technique dans le domaine.
+
+| Terme du glossaire | Code TypeScript | Couche |
+|---|---|---|
+| Pass (1 jour, 3 jours, VIP) | `Formule` (`PASS_1_JOUR`, `PASS_3_JOURS`, `VIP`) | domaine/offre |
+| Vague | `Vague` (entité) | domaine/offre |
+| Quota | `Vague.quota`, `Vague.placesRestantes()` | domaine/offre |
+| Grille des prix | `GrilleTarifaire` (agrégat), `prixActuel()`, `vagueActive()` | domaine/offre |
+| Places réservées | `GrilleTarifaire.reserver()` → `Tranche[]` | domaine/offre |
+| Places libérées | `GrilleTarifaire.liberer()` | domaine/offre |
+| Commande | `Commande` (agrégat), `LigneCommande` | domaine/commande |
+| Réservation (15 min) | `Commande.limiteDePaiement()`, `doitExpirerA()`, `expirer()` | domaine/commande |
+| Commande payée | `CommandePayee` (événement) | domaine/commande |
+| Acheteur | `Commande.acheteur` (`Email`) | domaine/commande |
+| Billet | `Billet` (agrégat), `Billet.emettre()` | domaine/billet |
+| Titulaire | `Titulaire` (Value Object) | domaine/commun |
+| Changement de nom | `Billet.changerTitulaire()` | domaine/billet |
+| Date limite J-7 | `Billet.dateLimiteDeChangementDeNom()` | domaine/billet |
+| Revente, prix plafond | `Billet.mettreEnRevente()`, `revendreA()` | domaine/billet |
+| Commission de revente | `OffreDeRevente.commission`, `netVendeur` | domaine/billet |
+| Montant (prix) | `Montant` (Value Object, en centimes) | domaine/commun |
+| PSP | `PortPaiement` (port), `PspPaiementAdapter` (ACL) | application, infrastructure |

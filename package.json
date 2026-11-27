@@ -1,0 +1,21 @@
+{
+  "name": "wavefest-billetterie",
+  "version": "1.0.0",
+  "description": "TP3 DDD : contexte Billetterie de WaveFest en TypeScript (architecture hexagonale)",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "todo": "grep -rn \"TODO TP3\" src tests || echo \"Aucun TODO TP3\""
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.7",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.9"
+  }
+}
