@@ -7,9 +7,9 @@ import {
   StatutCommande,
   StatutDeCommandeInattenduException,
   TitulairesManquantsException,
-} from "../../src/fr/wavefest/billetterie/domaine/commande/Commande";
-import { Montant } from "../../src/fr/wavefest/billetterie/domaine/commun/Montant";
-import { Formule } from "../../src/fr/wavefest/billetterie/domaine/offre/Formule";
+} from "../../../src/fr/wavefest/billetterie/domaine/commande/Commande";
+import { Montant } from "../../../src/fr/wavefest/billetterie/domaine/commun/Montant";
+import { Formule, JourDuPassInvalideException } from "../../../src/fr/wavefest/billetterie/domaine/offre/Formule";
 import { MAINTENANT, minutesApres, titulaires, tranche, uneCommandeDe, uneCommandeOuverteA } from "../fixtures";
 
 describe("Commande · R1 : 6 billets maximum par commande", () => {
@@ -50,6 +50,25 @@ describe("Commande · R1 : 6 billets maximum par commande", () => {
     const commande = uneCommandeOuverteA(MAINTENANT);
     commande.ajouterBillets(Formule.PASS_3_JOURS, [tranche(2, 149), tranche(1, 169)], titulaires(3));
     expect(commande.total().egale(Montant.euros(467))).toBe(true);
+  });
+});
+
+describe("Commande · jours de validité", () => {
+  it("un pass 1 jour doit indiquer son jour", () => {
+    const commande = uneCommandeOuverteA(MAINTENANT);
+    expect(() => commande.ajouterBillets(Formule.PASS_1_JOUR, [tranche(1, 59)], titulaires(1))).toThrow(
+      JourDuPassInvalideException,
+    );
+    expect(commande.nombreDeBillets()).toBe(0);
+  });
+
+  it("un pass 3 jours vaut pour les 3 jours, sans jour à choisir", () => {
+    const commande = uneCommandeOuverteA(MAINTENANT);
+    commande.ajouterBillets(Formule.PASS_3_JOURS, [tranche(1, 149)], titulaires(1));
+    expect(commande.lignesDeCommande()[0]?.joursValables).toEqual([1, 2, 3]);
+    expect(() => commande.ajouterBillets(Formule.VIP, [tranche(1, 299)], titulaires(1), 2)).toThrow(
+      JourDuPassInvalideException,
+    );
   });
 });
 

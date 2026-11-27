@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { Montant } from "../../src/fr/wavefest/billetterie/domaine/commun/Montant";
-import { Quantite } from "../../src/fr/wavefest/billetterie/domaine/commun/Quantite";
-import { Formule } from "../../src/fr/wavefest/billetterie/domaine/offre/Formule";
+import { Montant } from "../../../src/fr/wavefest/billetterie/domaine/commun/Montant";
+import { Quantite } from "../../../src/fr/wavefest/billetterie/domaine/commun/Quantite";
+import { Formule } from "../../../src/fr/wavefest/billetterie/domaine/offre/Formule";
 import {
   FestivalCompletException,
   GrilleTarifaire,
   PlacesInsuffisantesException,
-} from "../../src/fr/wavefest/billetterie/domaine/offre/GrilleTarifaire";
-import { FormuleNonProposeeException, Vague } from "../../src/fr/wavefest/billetterie/domaine/offre/Vague";
+} from "../../../src/fr/wavefest/billetterie/domaine/offre/GrilleTarifaire";
+import { FormuleNonProposeeException, Vague } from "../../../src/fr/wavefest/billetterie/domaine/offre/Vague";
 import { EARLY, grilleWaveFest, LAST_MINUTE, MAINTENANT, REGULAR } from "../fixtures";
 
 describe("GrilleTarifaire · R2 : le prix dépend de la vague active", () => {

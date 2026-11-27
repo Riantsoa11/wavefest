@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { Email, EmailInvalideException } from "../../src/fr/wavefest/billetterie/domaine/commun/Email";
-import { Montant, MontantInvalideException } from "../../src/fr/wavefest/billetterie/domaine/commun/Montant";
-import { Quantite, QuantiteInvalideException } from "../../src/fr/wavefest/billetterie/domaine/commun/Quantite";
-import { Titulaire, TitulaireInvalideException } from "../../src/fr/wavefest/billetterie/domaine/commun/Titulaire";
+import { Email, EmailInvalideException } from "../../../src/fr/wavefest/billetterie/domaine/commun/Email";
+import { Montant, MontantInvalideException } from "../../../src/fr/wavefest/billetterie/domaine/commun/Montant";
+import { Quantite, QuantiteInvalideException } from "../../../src/fr/wavefest/billetterie/domaine/commun/Quantite";
+import { Titulaire, TitulaireInvalideException } from "../../../src/fr/wavefest/billetterie/domaine/commun/Titulaire";
 
 describe("Montant", () => {
   it("additionne sans erreur d'arrondi (0,10 € + 0,20 € = 0,30 €)", () => {

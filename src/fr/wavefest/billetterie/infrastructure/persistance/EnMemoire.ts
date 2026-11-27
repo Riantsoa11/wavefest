@@ -35,6 +35,10 @@ export class BilletsEnMemoire implements Billets {
   async deLaCommande(commande: CommandeId): Promise<Billet[]> {
     return [...this.parIdentifiant.values()].filter((b) => b.commande.egale(commande));
   }
+
+  async tous(): Promise<Billet[]> {
+    return [...this.parIdentifiant.values()];
+  }
 }
 
 export class GrillesTarifairesEnMemoire implements GrillesTarifaires {

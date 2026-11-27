@@ -9,6 +9,8 @@ import { Commandes, GenerateurIdentifiants, GrillesTarifaires, Horloge } from ".
 export interface DemandeAchatPass {
   readonly acheteur: string;
   readonly formule: Formule;
+  /** Pour un pass 1 jour : le jour choisi (1, 2 ou 3). */
+  readonly jour?: number;
   readonly titulaires: readonly { prenom: string; nom: string; email: string }[];
 }
 
@@ -32,7 +34,7 @@ export class AcheterPassUseCase {
     const grille = await this.grilles.grilleActuelle();
     const tranches = grille.reserver(demande.formule, Quantite.de(titulaires.length), maintenant);
     try {
-      commande.ajouterBillets(demande.formule, tranches, titulaires);
+      commande.ajouterBillets(demande.formule, tranches, titulaires, demande.jour);
     } catch (erreur) {
       // Annulation technique de la réservation : aucune règle métier ici.
       grille.liberer(tranches);

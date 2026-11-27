@@ -12,6 +12,7 @@ export class LigneCommande {
     readonly formule: Formule,
     readonly tranche: Tranche,
     readonly titulaires: readonly Titulaire[],
+    readonly joursValables: readonly number[],
   ) {}
 
   nombreDeBillets(): number {

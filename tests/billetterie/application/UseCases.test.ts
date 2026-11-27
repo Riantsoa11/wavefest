@@ -1,21 +1,25 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { AcheterPassUseCase } from "../../src/fr/wavefest/billetterie/application/AcheterPassUseCase";
-import { ExpirerCommandesUseCase } from "../../src/fr/wavefest/billetterie/application/ExpirerCommandesUseCase";
-import { ChangerTitulaireUseCase, MettreEnReventeUseCase } from "../../src/fr/wavefest/billetterie/application/GererBilletUseCases";
-import { PayerCommandeUseCase } from "../../src/fr/wavefest/billetterie/application/PayerCommandeUseCase";
-import { StatutCommande, LimiteDeBilletsDepasseeException } from "../../src/fr/wavefest/billetterie/domaine/commande/Commande";
-import { ChangementDeNomTropTardException } from "../../src/fr/wavefest/billetterie/domaine/billet/Billet";
-import { CommandeId } from "../../src/fr/wavefest/billetterie/domaine/commun/Identifiants";
-import { Formule } from "../../src/fr/wavefest/billetterie/domaine/offre/Formule";
-import { HorlogeFixe } from "../../src/fr/wavefest/billetterie/infrastructure/horloge/Horloges";
+import { AcheterPassUseCase } from "../../../src/fr/wavefest/billetterie/application/AcheterPassUseCase";
+import { ExpirerCommandesUseCase } from "../../../src/fr/wavefest/billetterie/application/ExpirerCommandesUseCase";
+import { ChangerTitulaireUseCase, MettreEnReventeUseCase } from "../../../src/fr/wavefest/billetterie/application/GererBilletUseCases";
+import { PayerCommandeUseCase } from "../../../src/fr/wavefest/billetterie/application/PayerCommandeUseCase";
+import { StatutCommande, LimiteDeBilletsDepasseeException } from "../../../src/fr/wavefest/billetterie/domaine/commande/Commande";
+import { ChangementDeNomTropTardException } from "../../../src/fr/wavefest/billetterie/domaine/billet/Billet";
+import { CommandeId } from "../../../src/fr/wavefest/billetterie/domaine/commun/Identifiants";
+import { Formule } from "../../../src/fr/wavefest/billetterie/domaine/offre/Formule";
+import { HorlogeFixe } from "../../../src/fr/wavefest/billetterie/infrastructure/horloge/Horloges";
 import {
   BilletsEnMemoire,
   CommandesEnMemoire,
   GrillesTarifairesEnMemoire,
-} from "../../src/fr/wavefest/billetterie/infrastructure/persistance/EnMemoire";
-import { IdentifiantsSequentiels } from "../../src/fr/wavefest/billetterie/infrastructure/persistance/IdentifiantsSequentiels";
-import { ApiPspSimulee } from "../../src/fr/wavefest/billetterie/infrastructure/psp/ApiPspSimulee";
-import { PspPaiementAdapter } from "../../src/fr/wavefest/billetterie/infrastructure/psp/PspPaiementAdapter";
+} from "../../../src/fr/wavefest/billetterie/infrastructure/persistance/EnMemoire";
+import { IdentifiantsSequentiels } from "../../../src/fr/wavefest/billetterie/infrastructure/persistance/IdentifiantsSequentiels";
+import { ApiPspSimulee } from "../../../src/fr/wavefest/externe/psp/ApiPspSimulee";
+import { PspPaiementAdapter } from "../../../src/fr/wavefest/billetterie/infrastructure/psp/PspPaiementAdapter";
+import { PublicationIgnoree } from "../../../src/fr/wavefest/billetterie/infrastructure/integration/PublicationSurLeBus";
+import { ConfirmationsIgnorees } from "../../../src/fr/wavefest/billetterie/infrastructure/email/ConfirmationsParEmail";
+import { Montant } from "../../../src/fr/wavefest/billetterie/domaine/commun/Montant";
+import { JourDuPassInvalideException } from "../../../src/fr/wavefest/billetterie/domaine/offre/Formule";
 import { DEBUT_DU_FESTIVAL, EARLY, grilleWaveFest, joursAvant, MAINTENANT, REGULAR } from "../fixtures";
 
 const personnes = (n: number) =>
@@ -47,6 +51,8 @@ describe("Cas d'usage de la Billetterie", () => {
       identifiants,
       horloge,
       DEBUT_DU_FESTIVAL,
+      new PublicationIgnoree(),
+      new ConfirmationsIgnorees(),
     );
     expirer = new ExpirerCommandesUseCase(commandes, grilles, horloge);
   });
@@ -62,7 +68,7 @@ describe("Cas d'usage de la Billetterie", () => {
 
   it("R1 : un achat de 7 billets est refusé et ne garde aucune place", async () => {
     await expect(
-      acheter.executer({ acheteur: "a@wavefest.fr", formule: Formule.PASS_1_JOUR, titulaires: personnes(7) }),
+      acheter.executer({ acheteur: "a@wavefest.fr", formule: Formule.PASS_1_JOUR, jour: 2, titulaires: personnes(7) }),
     ).rejects.toThrow(LimiteDeBilletsDepasseeException);
     expect(await placesRestantes(EARLY)).toBe(3);
     expect(await placesRestantes(REGULAR)).toBe(5);
@@ -112,7 +118,7 @@ describe("Cas d'usage de la Billetterie", () => {
     const issue = await payer.executer(id);
     if (issue.issue !== "COMMANDE_PAYEE") throw new Error("paiement attendu");
     const billet = issue.billets[0]!;
-    const changer = new ChangerTitulaireUseCase(billets, new HorlogeFixe(joursAvant(DEBUT_DU_FESTIVAL, 7)));
+    const changer = new ChangerTitulaireUseCase(billets, new HorlogeFixe(joursAvant(DEBUT_DU_FESTIVAL, 7)), new PublicationIgnoree());
     await expect(changer.executer(billet, { prenom: "Bob", nom: "Durand", email: "bob@wavefest.fr" })).rejects.toThrow(
       ChangementDeNomTropTardException,
     );
@@ -122,8 +128,22 @@ describe("Cas d'usage de la Billetterie", () => {
     const id = await acheter.executer({ acheteur: "a@wavefest.fr", formule: Formule.VIP, titulaires: personnes(1) });
     const issue = await payer.executer(id);
     if (issue.issue !== "COMMANDE_PAYEE") throw new Error("paiement attendu");
-    const offre = await new MettreEnReventeUseCase(billets).executer(issue.billets[0]!, 200);
+    const offre = await new MettreEnReventeUseCase(billets).executer(issue.billets[0]!, Montant.euros(200));
     expect(offre.commission.centimes()).toBe(1000);
+  });
+
+  it("un pass 1 jour sans jour est refusé et ne garde aucune place", async () => {
+    await expect(
+      acheter.executer({ acheteur: "a@wavefest.fr", formule: Formule.PASS_1_JOUR, titulaires: personnes(2) }),
+    ).rejects.toThrow(JourDuPassInvalideException);
+    expect(await placesRestantes()).toBe(3);
+  });
+
+  it("un pass 1 jour n'est valable que le jour choisi", async () => {
+    const id = await acheter.executer({ acheteur: "a@wavefest.fr", formule: Formule.PASS_1_JOUR, jour: 2, titulaires: personnes(1) });
+    await payer.executer(id);
+    const [billet] = await billets.deLaCommande(id);
+    expect([1, 2, 3].map((jour) => billet!.estValableLe(jour))).toEqual([false, true, false]);
   });
 
   it("une commande inconnue est signalée", async () => {

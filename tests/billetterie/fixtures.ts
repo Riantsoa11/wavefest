@@ -1,14 +1,14 @@
-import { Billet } from "../src/fr/wavefest/billetterie/domaine/billet/Billet";
-import { Commande } from "../src/fr/wavefest/billetterie/domaine/commande/Commande";
-import { BilletId, CommandeId, VagueId } from "../src/fr/wavefest/billetterie/domaine/commun/Identifiants";
-import { Montant } from "../src/fr/wavefest/billetterie/domaine/commun/Montant";
-import { Quantite } from "../src/fr/wavefest/billetterie/domaine/commun/Quantite";
-import { Titulaire } from "../src/fr/wavefest/billetterie/domaine/commun/Titulaire";
-import { Email } from "../src/fr/wavefest/billetterie/domaine/commun/Email";
-import { Formule } from "../src/fr/wavefest/billetterie/domaine/offre/Formule";
-import { GrilleTarifaire } from "../src/fr/wavefest/billetterie/domaine/offre/GrilleTarifaire";
-import { Tranche } from "../src/fr/wavefest/billetterie/domaine/offre/Tranche";
-import { Vague } from "../src/fr/wavefest/billetterie/domaine/offre/Vague";
+import { Billet } from "../../src/fr/wavefest/billetterie/domaine/billet/Billet";
+import { Commande } from "../../src/fr/wavefest/billetterie/domaine/commande/Commande";
+import { BilletId, CommandeId, VagueId } from "../../src/fr/wavefest/billetterie/domaine/commun/Identifiants";
+import { Montant } from "../../src/fr/wavefest/billetterie/domaine/commun/Montant";
+import { Quantite } from "../../src/fr/wavefest/billetterie/domaine/commun/Quantite";
+import { Titulaire } from "../../src/fr/wavefest/billetterie/domaine/commun/Titulaire";
+import { Email } from "../../src/fr/wavefest/billetterie/domaine/commun/Email";
+import { Formule } from "../../src/fr/wavefest/billetterie/domaine/offre/Formule";
+import { GrilleTarifaire } from "../../src/fr/wavefest/billetterie/domaine/offre/GrilleTarifaire";
+import { Tranche } from "../../src/fr/wavefest/billetterie/domaine/offre/Tranche";
+import { Vague } from "../../src/fr/wavefest/billetterie/domaine/offre/Vague";
 
 export const MAINTENANT = new Date("2027-03-01T10:00:00Z");
 export const DEBUT_DU_FESTIVAL = new Date("2027-07-09T00:00:00Z");
@@ -69,6 +69,7 @@ export function unBilletAchete(prixEnEuros = 149): Billet {
     titulaire: Titulaire.nomme("Alice", "Martin", "alice@wavefest.fr"),
     prixAchat: Montant.euros(prixEnEuros),
     debutDuFestival: DEBUT_DU_FESTIVAL,
+    joursValables: [1, 2, 3],
   });
 }
 

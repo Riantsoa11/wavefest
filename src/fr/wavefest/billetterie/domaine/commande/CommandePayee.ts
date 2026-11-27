@@ -9,6 +9,7 @@ export interface PlacePayee {
   readonly formule: Formule;
   readonly titulaire: Titulaire;
   readonly prixPaye: Montant;
+  readonly joursValables: readonly number[];
 }
 
 /** Événement métier : la commande est payée, les billets peuvent être émis. */

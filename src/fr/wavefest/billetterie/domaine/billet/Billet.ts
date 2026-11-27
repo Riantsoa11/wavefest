@@ -29,6 +29,12 @@ export class BilletEnReventeException extends ErreurMetier {
   }
 }
 
+export class BilletDejaRembourseException extends ErreurMetier {
+  constructor(billet: BilletId) {
+    super(`Le billet ${billet.valeur()} a déjà été remboursé.`);
+  }
+}
+
 export class BilletPasEnReventeException extends ErreurMetier {
   constructor(billet: BilletId) {
     super(`Le billet ${billet.valeur()} n'est pas en revente.`);
@@ -46,6 +52,7 @@ export class Billet {
   private titulaireActuel: Titulaire;
   private statutActuel: StatutBillet = StatutBillet.VALIDE;
   private offreEnCours: OffreDeRevente | undefined;
+  private dejaRembourse = false;
 
   private constructor(
     readonly id: BilletId,
@@ -54,6 +61,7 @@ export class Billet {
     titulaire: Titulaire,
     readonly prixAchat: Montant,
     readonly debutDuFestival: Date,
+    readonly joursValables: readonly number[],
   ) {
     this.titulaireActuel = titulaire;
   }
@@ -65,6 +73,7 @@ export class Billet {
     titulaire: Titulaire;
     prixAchat: Montant;
     debutDuFestival: Date;
+    joursValables: readonly number[];
   }): Billet {
     return new Billet(
       params.id,
@@ -73,6 +82,7 @@ export class Billet {
       params.titulaire,
       params.prixAchat,
       new Date(params.debutDuFestival.getTime()),
+      [...params.joursValables],
     );
   }
 
@@ -82,6 +92,23 @@ export class Billet {
 
   statut(): StatutBillet {
     return this.statutActuel;
+  }
+
+  estValableLe(jour: number): boolean {
+    return this.joursValables.includes(jour);
+  }
+
+  estRembourse(): boolean {
+    return this.dejaRembourse;
+  }
+
+  /**
+   * Après l'annulation d'une tête d'affiche, le billet est remboursé une seule fois,
+   * et il reste valable (réponse de l'expert, TP2).
+   */
+  marquerRembourse(): void {
+    if (this.dejaRembourse) throw new BilletDejaRembourseException(this.id);
+    this.dejaRembourse = true;
   }
 
   offreDeRevente(): OffreDeRevente | undefined {

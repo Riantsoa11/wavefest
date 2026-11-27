@@ -3,7 +3,7 @@ import { ErreurMetier } from "../commun/ErreurMetier";
 import { CommandeId } from "../commun/Identifiants";
 import { Montant } from "../commun/Montant";
 import { Titulaire } from "../commun/Titulaire";
-import { Formule } from "../offre/Formule";
+import { Formule, joursValablesPour } from "../offre/Formule";
 import { Tranche } from "../offre/Tranche";
 import { CommandePayee, PlacePayee } from "./CommandePayee";
 import { LigneCommande } from "./LigneCommande";
@@ -75,8 +75,16 @@ export class Commande {
     return new Commande(id, acheteur, new Date(maintenant.getTime()));
   }
 
-  /** R1 : une commande ne contient jamais plus de 6 billets. */
-  ajouterBillets(formule: Formule, tranches: readonly Tranche[], titulaires: readonly Titulaire[]): void {
+  /**
+   * R1 : une commande ne contient jamais plus de 6 billets.
+   * Un pass 1 jour indique son jour (1, 2 ou 3) ; les autres pass valent pour les 3 jours.
+   */
+  ajouterBillets(
+    formule: Formule,
+    tranches: readonly Tranche[],
+    titulaires: readonly Titulaire[],
+    jour?: number,
+  ): void {
     this.exigerStatut(StatutCommande.EN_COURS);
     const demandes = tranches.reduce((total, tranche) => total + tranche.quantite.valeur(), 0);
     if (this.nombreDeBillets() + demandes > Commande.BILLETS_MAXIMUM) {
@@ -85,11 +93,12 @@ export class Commande {
     if (titulaires.length !== demandes) {
       throw new TitulairesManquantsException(demandes, titulaires.length);
     }
+    const joursValables = joursValablesPour(formule, jour);
 
     let premier = 0;
     for (const tranche of tranches) {
       const titulairesDeLaTranche = titulaires.slice(premier, premier + tranche.quantite.valeur());
-      this.lignes.push(new LigneCommande(formule, tranche, titulairesDeLaTranche));
+      this.lignes.push(new LigneCommande(formule, tranche, titulairesDeLaTranche, joursValables));
       premier += tranche.quantite.valeur();
     }
   }
@@ -150,6 +159,7 @@ export class Commande {
         formule: ligne.formule,
         titulaire,
         prixPaye: ligne.tranche.prixUnitaire,
+        joursValables: ligne.joursValables,
       })),
     );
     return new CommandePayee(this.id, this.acheteur, places, this.total(), new Date(maintenant.getTime()));

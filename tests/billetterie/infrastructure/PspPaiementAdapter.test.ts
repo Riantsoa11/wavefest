@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { CommandeId } from "../../src/fr/wavefest/billetterie/domaine/commun/Identifiants";
-import { Montant } from "../../src/fr/wavefest/billetterie/domaine/commun/Montant";
-import { ApiPspSimulee } from "../../src/fr/wavefest/billetterie/infrastructure/psp/ApiPspSimulee";
-import { PspPaiementAdapter } from "../../src/fr/wavefest/billetterie/infrastructure/psp/PspPaiementAdapter";
+import { CommandeId } from "../../../src/fr/wavefest/billetterie/domaine/commun/Identifiants";
+import { Montant } from "../../../src/fr/wavefest/billetterie/domaine/commun/Montant";
+import { ApiPspSimulee } from "../../../src/fr/wavefest/externe/psp/ApiPspSimulee";
+import { PspPaiementAdapter } from "../../../src/fr/wavefest/billetterie/infrastructure/psp/PspPaiementAdapter";
 
 describe("PspPaiementAdapter (ACL)", () => {
   it("traduit « succeeded » en paiement accepté", async () => {

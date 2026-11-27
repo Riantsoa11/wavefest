@@ -6,4 +6,5 @@ export interface Billets {
   sauver(billet: Billet): Promise<void>;
   parId(id: BilletId): Promise<Billet | undefined>;
   deLaCommande(commande: CommandeId): Promise<Billet[]>;
+  tous(): Promise<Billet[]>;
 }

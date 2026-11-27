@@ -4,6 +4,8 @@ import { CommandeIntrouvableException } from "./ErreursApplication";
 import {
   Billets,
   Commandes,
+  ConfirmationsDAchat,
+  PublicationBilletterie,
   GenerateurIdentifiants,
   GrillesTarifaires,
   Horloge,
@@ -28,6 +30,8 @@ export class PayerCommandeUseCase {
     private readonly identifiants: GenerateurIdentifiants,
     private readonly horloge: Horloge,
     private readonly debutDuFestival: Date,
+    private readonly publication: PublicationBilletterie,
+    private readonly confirmations: ConfirmationsDAchat,
   ) {}
 
   async executer(id: CommandeId): Promise<IssueDuPaiement> {
@@ -57,10 +61,13 @@ export class PayerCommandeUseCase {
         titulaire: place.titulaire,
         prixAchat: place.prixPaye,
         debutDuFestival: this.debutDuFestival,
+        joursValables: place.joursValables,
       }),
     );
     for (const billet of billets) await this.billets.sauver(billet);
     await this.commandes.sauver(commande);
+    await this.publication.billetsEmis(billets);
+    await this.confirmations.confirmer(commandePayee);
     return { issue: "COMMANDE_PAYEE", billets: billets.map((billet) => billet.id) };
   }
 }

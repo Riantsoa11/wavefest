@@ -1,7 +1,7 @@
 import { PortPaiement, ResultatPaiement } from "../../application/ports";
 import { CommandeId } from "../../domaine/commun/Identifiants";
 import { Montant } from "../../domaine/commun/Montant";
-import { ApiPspSimulee, PaymentIntent } from "./ApiPspSimulee";
+import { ApiPspSimulee, PaymentIntent } from "../../../externe/psp/ApiPspSimulee";
 
 /**
  * Anticorruption Layer (ACL) : traduit notre langage (Montant, CommandeId, paiement

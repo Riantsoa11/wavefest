@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+  BilletDejaRembourseException,
   BilletEnReventeException,
   BilletPasEnReventeException,
   ChangementDeNomTropTardException,
   PrixDeReventeTropEleveException,
   StatutBillet,
-} from "../../src/fr/wavefest/billetterie/domaine/billet/Billet";
-import { Montant } from "../../src/fr/wavefest/billetterie/domaine/commun/Montant";
+} from "../../../src/fr/wavefest/billetterie/domaine/billet/Billet";
+import { Montant } from "../../../src/fr/wavefest/billetterie/domaine/commun/Montant";
 import { bob, DEBUT_DU_FESTIVAL, joursAvant, unBilletAchete } from "../fixtures";
 
 describe("Billet · R5 : changement de nom gratuit jusqu'à J-7", () => {
@@ -76,6 +77,14 @@ describe("Billet · R6 : revente au prix d'achat au plus, commission de 5 %", ()
 
   it("on ne peut pas racheter un billet qui n'est pas en revente", () => {
     expect(() => unBilletAchete().revendreA(bob())).toThrow(BilletPasEnReventeException);
+  });
+
+  it("un billet n'est remboursé qu'une fois et reste valable", () => {
+    const billet = unBilletAchete();
+    billet.marquerRembourse();
+    expect(billet.estRembourse()).toBe(true);
+    expect(billet.estValableLe(2)).toBe(true);
+    expect(() => billet.marquerRembourse()).toThrow(BilletDejaRembourseException);
   });
 
   it("un billet retiré de la revente redevient valide", () => {

@@ -8,3 +8,5 @@ export type { GenerateurIdentifiants } from "./GenerateurIdentifiants";
 export type { GrillesTarifaires } from "./GrillesTarifaires";
 export type { Horloge } from "./Horloge";
 export type { PortPaiement, ResultatPaiement } from "./PortPaiement";
+export type { ConfirmationsDAchat } from "./ConfirmationsDAchat";
+export type { PublicationBilletterie } from "./PublicationBilletterie";
